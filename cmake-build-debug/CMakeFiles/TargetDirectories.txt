@@ -1,0 +1,3 @@
+C:/Users/uzver/Devgit/kbrd/cmake-build-debug/CMakeFiles/kbrd.dir
+C:/Users/uzver/Devgit/kbrd/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/uzver/Devgit/kbrd/cmake-build-debug/CMakeFiles/rebuild_cache.dir
