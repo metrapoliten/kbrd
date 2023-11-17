@@ -5,7 +5,10 @@ set(CMAKE_C_STANDARD 17)
 
 add_executable(kbrd
         src/main.c
-        src/getInteger.c)
+        src/getInteger.c
+        src/ite8291.c
+        src/run.c
+        include/run.h)
 
 target_include_directories(kbrd PRIVATE ${PROJECT_SOURCE_DIR}/include)
 

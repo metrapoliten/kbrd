@@ -1,6 +1,12 @@
 # ninja log v5
-211	395	7218802153113503	kbrd.exe	854edbeb007b2fb8
-4	210	7218802151329391	CMakeFiles/kbrd.dir/src/main.c.obj	c81ce5aa4eaec240
-12	194	7218898362826523	CMakeFiles/kbrd.dir/src/getInteger.c.obj	8f4d33263bc934c1
-3	212	7218898363011419	CMakeFiles/kbrd.dir/src/main.c.obj	c81ce5aa4eaec240
-213	433	7218898365128883	kbrd.exe	cc94dd17f5be94cc
+163	315	7219296235124984	kbrd.exe	f0a68497db8d16c6
+6	166	7219666897087616	CMakeFiles/kbrd.dir/src/main.c.obj	c81ce5aa4eaec240
+25	209	7219666897544763	CMakeFiles/kbrd.dir/src/getInteger.c.obj	8f4d33263bc934c1
+15	191	7219666897373401	CMakeFiles/kbrd.dir/src/ite8291.c.obj	3515b998f3ba94bd
+6	167	7219673414050956	CMakeFiles/kbrd.dir/src/main.c.obj	c81ce5aa4eaec240
+18	182	7219673414201451	CMakeFiles/kbrd.dir/src/getInteger.c.obj	8f4d33263bc934c1
+35	185	7219673414231459	CMakeFiles/kbrd.dir/src/run.c.obj	21a4f5e3b4e3d695
+27	209	7219673414458620	CMakeFiles/kbrd.dir/src/ite8291.c.obj	3515b998f3ba94bd
+209	717	7219673419430361	kbrd.exe	549a51e8a33151e8
+5	244	7219674330491030	CMakeFiles/kbrd.dir/src/run.c.obj	21a4f5e3b4e3d695
+4	163	7219674403859315	kbrd.exe	549a51e8a33151e8
