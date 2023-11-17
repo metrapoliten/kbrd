@@ -4,7 +4,8 @@ project(kbrd C)
 set(CMAKE_C_STANDARD 17)
 
 add_executable(kbrd
-        src/main.c)
+        src/main.c
+        src/getInteger.c)
 
 target_include_directories(kbrd PRIVATE ${PROJECT_SOURCE_DIR}/include)
 

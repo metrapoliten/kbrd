@@ -1,141 +1,155 @@
-#include <stdio.h> // printf
+#include <stdio.h>
 #include <string.h>
+#include "getInteger.h"
+#include "stdlib.h"
 
 #include "hidapi.h"
-
-#define MAX_STR 255
 
 #define VENDOR_ID   0x048d
 #define PRODUCT_ID  0x6006
 
-const char *hid_bus_name(hid_bus_type bus_type) {
-    static const char *const HidBusTypeName[] = {
-            "Unknown",
-            "USB",
-            "Bluetooth",
-            "I2C",
-            "SPI",
-    };
+#define REPORT_LENGTH 9 //Report ID (first byte) + Setup data (8 bytes) (Windows only)
 
-    if ((int)bus_type < 0)
-        bus_type = HID_API_BUS_UNKNOWN;
-    if ((int)bus_type >= (int)(sizeof(HidBusTypeName) / sizeof(HidBusTypeName[0])))
-        bus_type = HID_API_BUS_UNKNOWN;
+// #define SET_EFFECT      0x08
+#define SET_BRIGHTNESS  0x09
+// #define SET_COLOR       0x14
 
-    return HidBusTypeName[bus_type];
-}
-
-void print_device(struct hid_device_info *cur_dev) {
-    printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls", cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
-    printf("\n");
-    printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
-    printf("  Product:      %ls\n", cur_dev->product_string);
-    printf("  Release:      %hx\n", cur_dev->release_number);
-    printf("  Interface:    %d\n",  cur_dev->interface_number);
-    printf("  Usage (page): 0x%hx (0x%hx)\n", cur_dev->usage, cur_dev->usage_page);
-    printf("  Bus type: %d (%s)\n", cur_dev->bus_type, hid_bus_name(cur_dev->bus_type));
-    printf("\n");
-}
-
-void print_hid_report_descriptor_from_device(hid_device *device) {
-    unsigned char descriptor[HID_API_MAX_REPORT_DESCRIPTOR_SIZE];
-    int res = 0;
-
-    printf("  Report Descriptor: ");
-    res = hid_get_report_descriptor(device, descriptor, sizeof(descriptor));
-    if (res < 0) {
-        printf("error getting: %ls", hid_error(device));
-    }
-    else {
-        printf("(%d bytes)", res);
-    }
-    for (int i = 0; i < res; i++) {
-        if (i % 10 == 0) {
-            printf("\n");
-        }
-        printf("0x%02x, ", descriptor[i]);
-    }
-    printf("\n");
-}
-
-void print_hid_report_descriptor_from_path(const char *path) {
-    hid_device *device = hid_open_path(path);
-    if (device) {
-        print_hid_report_descriptor_from_device(device);
-        hid_close(device);
-    }
-    else {
-        printf("  Report Descriptor: Unable to open device by path\n");
+void transferReport(hid_device *handle, unsigned char *buf)
+{
+    int res = hid_send_feature_report(handle, buf, REPORT_LENGTH);
+    if (res == -1) {
+        printf("%ls\n", hid_error(handle));
+        hid_close(handle);
+        hid_exit();
     }
 }
 
-void print_devices(struct hid_device_info *cur_dev) {
-    for (; cur_dev; cur_dev = cur_dev->next) {
-        print_device(cur_dev);
-    }
+void buildRequest(unsigned char *buf, unsigned char type, unsigned char control,
+                  unsigned char *payload, unsigned char payloadLen)
+{
+    memset(buf,0x00,REPORT_LENGTH);
+    // buf[0] = 0x00    (ReportID) (Windows only)
+    buf[1] = type;
+    buf[2] = control;
+    memcpy(buf + 3, payload, payloadLen);
 }
 
-void print_devices_with_descriptor(struct hid_device_info *cur_dev) {
-    for (; cur_dev; cur_dev = cur_dev->next) {
-        print_device(cur_dev);
-        print_hid_report_descriptor_from_path(cur_dev->path);
+void sendFeatureReport(hid_device *handle, unsigned char type, unsigned char control,
+                       unsigned char *payload, unsigned char payloadLen)
+{
+    unsigned char buf[REPORT_LENGTH];
+    buildRequest(buf, type, control, payload, payloadLen);
+    transferReport(handle, buf);
+}
+
+int setBrightness(hid_device *handle)
+{
+    unsigned char brightness = getInteger("Enter the brightness value (from 1 to 100 inclusive): ");
+
+    if ((brightness < 0) || (brightness > 100)) {
+        perror("Brightness must be between 0 and 100 inclusively\n");
+        return -1;
+    }
+    sendFeatureReport(handle, SET_BRIGHTNESS, 0x02, &brightness, 1);
+    return 0;
+}
+
+#if 0
+void setColor(unsigned char standardColor)
+{
+
+}
+
+void getFeatureReport(unsigned char *buf)
+{
+
+}
+#endif
+
+void printNullErr()
+{
+    printf("%ls\n", hid_error(NULL));
+    hid_exit();
+}
+
+void *init()
+{
+    int res;
+    hid_device *handle;
+
+    res = hid_init();
+
+    if (res == -1) {
+        printNullErr();
+        return NULL;
+    }
+
+    handle = hid_open(VENDOR_ID, PRODUCT_ID, NULL);
+
+    if (!handle) {
+        printNullErr();
+        return NULL;
+    }
+    return handle;
+}
+
+void finalizeHidApi(hid_device *handle)
+{
+    int res;
+    hid_close(handle);
+    res = hid_exit();
+    if (res == -1){
+        perror("HIDAPI couldn't exit");
+        exit(-1);
     }
 }
 
 int main(void)
 {
-    int res;
-    wchar_t wstr[MAX_STR];
-    hid_device *handle;
-    int i;
+    int userInput;
 
-    res = hid_init();
-
-    if (res == -1) {
-        printf("%ls\n", hid_error(NULL));
-        hid_exit();
-        return 1;
+    hid_device *handle = init();
+    if (!handle)
+    {
+        return -1;
     }
 
-    handle = hid_open(VENDOR_ID, PRODUCT_ID, NULL);
-    if (!handle) {
-        printf("%ls\n", hid_error(NULL));
-        hid_exit();
-        return 1;
-    }
-    unsigned char buf[9];
-    memset(buf,0x00,sizeof(buf));
-    // first value for Report ID = 0x00 (only for Windows "feature")
-                    //first mode (on, add set-gs) || transfer colour              // set brightness
-    buf[1] = 0x14;  //0x08 - init mode            ||  0x14 - init mode            // 0x09 - init mode
-    buf[2] = 0x00;  //0x02 - ?, 0x01 - turn off   ||  no matter. 0x00 - 0xff work // seems like only 0x03 work
-    buf[3] = 0x01;  //"effect" in use??         // seems like only 0x01           // brightness
-    buf[4] = 0xff;  //speed                     || colour
-    buf[5] = 0xff;  //brightness                || colour
-    buf[6] = 0x00;  //colour from struct        || colour
-    buf[7] = 0x00;   // ??
-    buf[8] = 0x1;   // save: 0x00 - no, 0x01 - yes
+    puts("Available options:\n1. Change brightness.");
+    userInput = getInteger("Choose option:");
 
-//    res = hid_write(handle, buf, 8 + 1);
-//    if (res == -1) {
-//        printf("%ls\n", hid_error(handle));
-//        hid_close(handle);
-//        hid_exit();
-//        return 1;
-//    }
-
-    res = hid_send_feature_report(handle, buf, 9);
-    if (res == -1) {
-        printf("%ls\n", hid_error(handle));
-        hid_close(handle);
-        hid_exit();
-        return 1;
+    switch (userInput) {
+        case 1:
+            setBrightness(handle);
+            break;
+#if 0
+        case 2:
+            setColor();
+            break;
+        case 3:
+            setEffect();
+#endif
+        default:
+            perror("No such option.");
+            break;
     }
 
-    hid_close(handle);
+#if 0
+    unsigned char buf_get[256];
+    memset(buf_get,0,sizeof(buf));
 
-    // Finalize the hidapi library
-    res = hid_exit();
+    res = hid_get_feature_report(handle, buf, sizeof(buf));
+    if (res < 0) {
+        printf("Unable to get a feature report: %ls\n", hid_error(handle));
+    }
+    else {
+        // Print out the returned buffer.
+        printf("Feature Report\n   ");
+        for (i = 0; i < res; i++)
+            printf("%02x ", (unsigned int) buf[i]);
+        printf("\n");
+    }
+#endif
 
+    finalizeHidApi(handle);
     return 0;
 }
