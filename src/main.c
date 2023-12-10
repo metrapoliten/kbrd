@@ -1,5 +1,5 @@
 #include "ite8291.h"
-#include "run.h"
+#include "interface.h"
 
 int main(void)
 {

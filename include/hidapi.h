@@ -365,15 +365,15 @@ extern "C" {
 				-1 on error.
 				Call hid_error(dev) to get the failure reason.
 				If no packet was available to be read and
-				the handle is in non-blocking mode, this function returns 0.
+				the handle is in non-blocking command, this function returns 0.
 		*/
 		int  HID_API_EXPORT HID_API_CALL hid_read(hid_device *dev, unsigned char *data, size_t length);
 
 		/** @brief Set the device handle to be non-blocking.
 
-			In non-blocking mode calls to hid_read() will return
+			In non-blocking command calls to hid_read() will return
 			immediately with a value of 0 if there is no data to be
-			read. In blocking mode, hid_read() will wait (block) until
+			read. In blocking command, hid_read() will wait (block) until
 			there is data to read before returning.
 
 			Nonblocking can be turned on and off at any time.

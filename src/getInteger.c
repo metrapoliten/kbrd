@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int checkErr(const char *endptr, const char *buf, const long number) {
+static int checkErr(const char *endptr, const char *buf, const long number) {
     if (errno == ERANGE)
     {
         puts("the number is too small or too large.");
@@ -9,7 +9,7 @@ int checkErr(const char *endptr, const char *buf, const long number) {
     }
     else if (endptr == buf)
     {
-        puts("the number isn't the integer.");
+        puts("not a decimal number");
         return 0;
     }
     else if (*endptr && *endptr != '\n')
@@ -33,13 +33,12 @@ long getInteger(const char *outputString)
     long number;
     do
     {
-        printf("%s\n", outputString);
+        printf("%s", outputString);
         if (!fgets(buf, 1024, stdin))
         {
             puts("reading input error.");
             exit(1);
         }
-
         char *endptr = NULL;
         errno = 0;
         number = strtol(buf, &endptr, 10);

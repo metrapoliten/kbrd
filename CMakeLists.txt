@@ -3,12 +3,16 @@ project(kbrd C)
 
 set(CMAKE_C_STANDARD 17)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic")
+
 add_executable(kbrd
         src/main.c
         src/getInteger.c
         src/ite8291.c
-        src/run.c
-        include/run.h)
+        src/interface.c
+        include/interface.h
+        src/doStuff.c
+        include/doStuff.h)
 
 target_include_directories(kbrd PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
