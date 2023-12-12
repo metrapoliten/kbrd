@@ -1,5 +1,5 @@
 #include "ite8291.h"
-#include "interface.h"
+#include "userInterface.h"
 
 int main(void)
 {
@@ -9,7 +9,7 @@ int main(void)
         hidNullErr();
         return -1;
     }
-    run(dev);
+    userInterface(dev);
     finalizeHidApi(dev);
     return 0;
 }

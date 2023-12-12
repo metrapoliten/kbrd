@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int sendBrightness(hid_device *dev)
+//#define DEBUG_MSG
+
+int handleBrightness(hid_device *dev)
 {
     unsigned char brightness = getInteger("value [0, 100]: ");
     if (brightness > 100)
@@ -14,7 +16,7 @@ int sendBrightness(hid_device *dev)
     return 0;
 }
 
-void sendMonocolor(hid_device *dev)
+void handleMonocolor(hid_device *dev)
 {
     char colorBuf[14];
     (void) fputs("[red green blue]: ", stdout);
@@ -26,6 +28,8 @@ void sendMonocolor(hid_device *dev)
     setColor(dev, 0x01, 0x01, red, green, blue);
 }
 
+//make sendFeatureReport not static in ite8291.c
+#ifdef DEBUG_MSG
 void sendDebug(hid_device *dev)
 {
     unsigned char payload[8];
@@ -38,3 +42,4 @@ void sendDebug(hid_device *dev)
     }
     sendFeatureReport(dev, payload[0], payload[1], payload + 2, 5);
 }
+#endif

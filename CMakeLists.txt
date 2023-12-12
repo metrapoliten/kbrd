@@ -9,10 +9,10 @@ add_executable(kbrd
         src/main.c
         src/getInteger.c
         src/ite8291.c
-        src/interface.c
-        include/interface.h
-        src/doStuff.c
-        include/doStuff.h)
+        src/userInterface.c
+        include/userInterface.h
+        src/handler.c
+        include/handler.h)
 
 target_include_directories(kbrd PRIVATE ${PROJECT_SOURCE_DIR}/include)
 

@@ -1,13 +1,11 @@
 #include <stdio.h>
 
-#include "doStuff.h"
+#include "handler.h"
 
-#define DEBUG_MSG
+//#define DEBUG_MSG
 
 enum options
 {
-    ON = 's',
-    OFF = 'o',
     CHANGE_COLOR = 'c',
     CHANGE_BRIGHTNESS = 'b',
     HELP = 'h',
@@ -18,7 +16,7 @@ enum options
 #endif
 };
 
-void clearStdin(void)
+static void clearStdin(void)
 {
     int c = getchar();
 
@@ -57,7 +55,7 @@ static void printOptions(void)
                 "  q     quit\n");
 }
 
-int run(hid_device *dev)
+int userInterface(hid_device *dev)
 {
     char optionBuf[4] = {0};
     int res;
@@ -79,7 +77,7 @@ int run(hid_device *dev)
             switch (optionBuf[0])
             {
                 case CHANGE_BRIGHTNESS:
-                    res = sendBrightness(dev);
+                    res = handleBrightness(dev);
                     if (res == -1)
                     {
                         (void) fprintf(stderr,
@@ -87,8 +85,7 @@ int run(hid_device *dev)
                     }
                     break;
                 case CHANGE_COLOR:
-                    sendMonocolor(dev);
-//                    clearStdin();
+                    handleMonocolor(dev);
                     break;
                 case HELP:
                     printHelp();
@@ -104,27 +101,10 @@ int run(hid_device *dev)
                     break;
 #endif
                 default:
-                    fprintf(stderr, "\33[31m check your input\33[m\n");
+                    (void) fprintf(stderr, "\33[31m check your input\33[m\n");
                     break;
             }
         }
     }
-
-#if 0
-    unsigned char buf_get[256];
-    memset(buf_get,0,sizeof(buf));
-
-    res = hid_get_feature_report(handle, buf, sizeof(buf));
-    if (res < 0) {
-        printf("Unable to get a feature report: %ls\n", hid_error(handle));
-    }
-    else {
-        // Print out the returned buffer.
-        printf("Feature Report\n   ");
-        for (i = 0; i < res; i++)
-            printf("%02x ", (unsigned int) buf[i]);
-        printf("\n");
-    }
-#endif
     return 0;
 }

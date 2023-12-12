@@ -70,15 +70,15 @@ build CMakeFiles/kbrd.dir/src/ite8291.c.obj: C_COMPILER__kbrd_unscanned_Debug C$
   OBJECT_DIR = CMakeFiles\kbrd.dir
   OBJECT_FILE_DIR = CMakeFiles\kbrd.dir\src
 
-build CMakeFiles/kbrd.dir/src/interface.c.obj: C_COMPILER__kbrd_unscanned_Debug C$:/Users/uzver/Devgit/kbrd/src/interface.c || cmake_object_order_depends_target_kbrd
-  DEP_FILE = CMakeFiles\kbrd.dir\src\interface.c.obj.d
+build CMakeFiles/kbrd.dir/src/userInterface.c.obj: C_COMPILER__kbrd_unscanned_Debug C$:/Users/uzver/Devgit/kbrd/src/userInterface.c || cmake_object_order_depends_target_kbrd
+  DEP_FILE = CMakeFiles\kbrd.dir\src\userInterface.c.obj.d
   FLAGS = -Wall -Wextra -Wpedantic -g -fdiagnostics-color=always
   INCLUDES = -IC:/Users/uzver/Devgit/kbrd/include
   OBJECT_DIR = CMakeFiles\kbrd.dir
   OBJECT_FILE_DIR = CMakeFiles\kbrd.dir\src
 
-build CMakeFiles/kbrd.dir/src/doStuff.c.obj: C_COMPILER__kbrd_unscanned_Debug C$:/Users/uzver/Devgit/kbrd/src/doStuff.c || cmake_object_order_depends_target_kbrd
-  DEP_FILE = CMakeFiles\kbrd.dir\src\doStuff.c.obj.d
+build CMakeFiles/kbrd.dir/src/handler.c.obj: C_COMPILER__kbrd_unscanned_Debug C$:/Users/uzver/Devgit/kbrd/src/handler.c || cmake_object_order_depends_target_kbrd
+  DEP_FILE = CMakeFiles\kbrd.dir\src\handler.c.obj.d
   FLAGS = -Wall -Wextra -Wpedantic -g -fdiagnostics-color=always
   INCLUDES = -IC:/Users/uzver/Devgit/kbrd/include
   OBJECT_DIR = CMakeFiles\kbrd.dir
@@ -92,7 +92,7 @@ build CMakeFiles/kbrd.dir/src/doStuff.c.obj: C_COMPILER__kbrd_unscanned_Debug C$
 #############################################
 # Link the executable kbrd.exe
 
-build kbrd.exe: C_EXECUTABLE_LINKER__kbrd_Debug CMakeFiles/kbrd.dir/src/main.c.obj CMakeFiles/kbrd.dir/src/getInteger.c.obj CMakeFiles/kbrd.dir/src/ite8291.c.obj CMakeFiles/kbrd.dir/src/interface.c.obj CMakeFiles/kbrd.dir/src/doStuff.c.obj | C$:/Users/uzver/Devgit/kbrd/lib/hidapi.lib
+build kbrd.exe: C_EXECUTABLE_LINKER__kbrd_Debug CMakeFiles/kbrd.dir/src/main.c.obj CMakeFiles/kbrd.dir/src/getInteger.c.obj CMakeFiles/kbrd.dir/src/ite8291.c.obj CMakeFiles/kbrd.dir/src/userInterface.c.obj CMakeFiles/kbrd.dir/src/handler.c.obj | C$:/Users/uzver/Devgit/kbrd/lib/hidapi.lib
   FLAGS = -Wall -Wextra -Wpedantic -g
   LINK_LIBRARIES = C:/Users/uzver/Devgit/kbrd/lib/hidapi.lib  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\kbrd.dir

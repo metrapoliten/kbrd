@@ -1,14 +1,10 @@
 # ninja log v5
-134	290	7239486230387802	kbrd.exe	b5b561658b0de174
-5	119	7239432919075847	CMakeFiles/kbrd.dir/src/main.c.obj	f4d52e0936eba292
-18	145	7239432919326419	CMakeFiles/kbrd.dir/src/getInteger.c.obj	541f4d4452d6c63
+290	659	7240990876780324	kbrd.exe	5f37178b5f8b9698
+4	288	7240990873154462	CMakeFiles/kbrd.dir/src/main.c.obj	f4d52e0936eba292
+15	286	7240990873128464	CMakeFiles/kbrd.dir/src/getInteger.c.obj	541f4d4452d6c63
 10	127	7239238213248519	CMakeFiles/kbrd.dir/src/doStaff.c.obj	c3cfc54842e8707d
-12	157	7239432919427536	CMakeFiles/kbrd.dir/src/ite8291.c.obj	46cff33b5c7497e9
+43	289	7240990873154462	CMakeFiles/kbrd.dir/src/ite8291.c.obj	46cff33b5c7497e9
 4	137	7239227262599964	CMakeFiles/kbrd.dir/src/run.c.obj	21a4f5e3b4e3d695
-4	133	7239486228890067	CMakeFiles/kbrd.dir/src/interface.c.obj	a4ee76ab6c7f2cf7
+33	290	7240990873174079	CMakeFiles/kbrd.dir/src/interface.c.obj	a4ee76ab6c7f2cf7
 3	143	7239484213774793	CMakeFiles/kbrd.dir/src/doStuff.c.obj	6d686a76b96243db
-4	132	7239487337277591	CMakeFiles/kbrd.dir/src/interface.c.obj	a4ee76ab6c7f2cf7
-4	154	7239487366790546	kbrd.exe	b5b561658b0de174
-13	154	7239499568889802	CMakeFiles/kbrd.dir/src/interface.c.obj	a4ee76ab6c7f2cf7
-5	165	7239499569015428	CMakeFiles/kbrd.dir/src/ite8291.c.obj	46cff33b5c7497e9
-165	325	7239499570526077	kbrd.exe	b5b561658b0de174
+24	287	7240990873128464	CMakeFiles/kbrd.dir/src/handler.c.obj	b147ee78a31e0237

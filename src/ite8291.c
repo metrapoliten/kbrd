@@ -25,8 +25,8 @@ enum command
  * [2]      mode of command
  * [3-8]    payload info
 */
-//not static due to sendDebug
-void sendFeatureReport(hid_device *dev, unsigned char command, unsigned char control,
+// make not static if you want to use debug
+static void sendFeatureReport(hid_device *dev, unsigned char command, unsigned char control,
                        unsigned char *payload, unsigned payloadLen)
 {
     unsigned char buf[REPORT_LENGTH];
@@ -60,13 +60,6 @@ void setColor(hid_device *dev, unsigned char control, unsigned char row,
             {0x01, 0x0a, 0x64, 0x08, 0x00, 0x01};   //report to save changes in chip;
     sendFeatureReport(dev, SET_EFFECT, 0x02, savePayload, payloadLen);
 }
-
-#if 0
-void getFeatureReport(unsigned char *buf)
-{
-
-}
-#endif
 
 void hidNullErr(void)
 {
