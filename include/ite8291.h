@@ -27,18 +27,18 @@ void setBrightness(hid_device *dev, unsigned char brightness);
 
 /*! \brief
  * Close a device and finalize HIDAPI library
- * @param dev A device handle returned from initDevice()
+ * \param dev A device handle returned from initDevice()
  */
 void finalizeHidApi(hid_device *dev);
 
 /*! \brief
  * Sets new keyboard color (RGB)
- * @param dev A device handle returned from initDevice()
- * @param control Control bit of sequence
- * @param row Row of keyboard
- * @param red Level of red [0; 255]
- * @param green Level of green [0; 255]
- * @param blue Level of blue [0; 255]
+ * \param dev A device handle returned from initDevice()
+ * \param control Control bit of sequence
+ * \param row Row of keyboard
+ * \param red Level of red [0; 255]
+ * \param green Level of green [0; 255]
+ * \param blue Level of blue [0; 255]
  */
 void setColor(hid_device *dev, unsigned char control, unsigned char row,
               unsigned char red, unsigned char green, unsigned char blue);

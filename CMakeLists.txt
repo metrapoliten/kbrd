@@ -8,11 +8,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic")
 add_executable(kbrd
         src/main.c
         src/getInteger.c
+        src/handler.c
         src/ite8291.c
         src/userInterface.c
-        include/userInterface.h
-        src/handler.c
-        include/handler.h)
+)
 
 target_include_directories(kbrd PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
