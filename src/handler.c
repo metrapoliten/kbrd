@@ -1,7 +1,8 @@
-#include "ite8291.h"
-#include "getInteger.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "getInteger.h"
+#include "ite8291.h"
 
 //#define DEBUG_MSG
 

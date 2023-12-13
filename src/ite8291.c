@@ -4,7 +4,8 @@
 
 #include "hidapi.h"
 
-#define REPORT_LENGTH 9 //Report ID (first byte) + Setup data (8 bytes) (Windows only)
+//Report ID (first byte) + Setup data (8 bytes) (Windows only)
+#define REPORT_LENGTH 9
 
 enum deviceInfo
 {

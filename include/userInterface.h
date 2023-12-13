@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hidapi.h"
+#include "../lib/hidapi.h"
 
 /*! *\brief
  * Runs user command-line interface which helps to change keyboards mods

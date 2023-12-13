@@ -13,6 +13,9 @@ add_executable(kbrd
         src/userInterface.c
 )
 
-target_include_directories(kbrd PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(kbrd
+        PRIVATE ${PROJECT_SOURCE_DIR}/include
+        PRIVATE ${PROJECT_SOURCE_DIR}/lib
+)
 
 target_link_libraries(kbrd ${PROJECT_SOURCE_DIR}/lib/hidapi.lib)

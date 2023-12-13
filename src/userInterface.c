@@ -46,8 +46,6 @@ static void printHelp(void)
 static void printOptions(void)
 {
     (void) puts("\33[1m available commands:\33[m\n"
-                "  s     on\n"
-                "  o     off\n"
                 "  b     set brightness\n"
                 "  c     set color\n"
                 "  h     usage help\n"
@@ -55,55 +53,60 @@ static void printOptions(void)
                 "  q     quit\n");
 }
 
+static void switchOption(hid_device *dev, const char *optionBuf)
+{
+    int res;
+    switch (optionBuf[0])
+    {
+        case CHANGE_BRIGHTNESS:
+            res = handleBrightness(dev);
+            if (res == -1)
+            {
+                (void) fprintf(stderr,
+                               "\33[31m level of brightness must be from 0 to 100 inclusively\33[m\n");
+            }
+            break;
+        case CHANGE_COLOR:
+            handleMonocolor(dev);
+            break;
+        case HELP:
+            printHelp();
+            break;
+        case LIST_OPTIONS:
+            printOptions();
+            break;
+        case QUIT:
+            break;
+#ifdef DEBUG_MSG
+            case DEBUG_OPTION:
+                    sendDebug(dev);
+                    break;
+#endif
+        default:
+            (void) fprintf(stderr, "\33[31m 2check your input\33[m\n");
+            break;
+    }
+}
+
 void runUserInterface(hid_device *dev)
 {
     char optionBuf[4] = {0};
-    int res;
-
     printOptions();
     while (optionBuf[0] != QUIT)
     {
         (void) fputs("command (l for list): ", stdout);
         (void) scanf(" %4s", optionBuf);
+
         if (optionBuf[0] == '\n' || (optionBuf[1] != '\n' && optionBuf[1] != 0))
         {
-            (void) fprintf(stderr, "\33[31m check your input\33[m\n");
+            (void) fprintf(stderr, "\33[31m 1check your input\33[m\n");
             optionBuf[0] = '\0';
             clearStdin();
         }
         else
         {
             clearStdin();
-            switch (optionBuf[0])
-            {
-                case CHANGE_BRIGHTNESS:
-                    res = handleBrightness(dev);
-                    if (res == -1)
-                    {
-                        (void) fprintf(stderr,
-                                       "\33[31m level of brightness must be from 0 to 100 inclusively\33[m\n");
-                    }
-                    break;
-                case CHANGE_COLOR:
-                    handleMonocolor(dev);
-                    break;
-                case HELP:
-                    printHelp();
-                    break;
-                case LIST_OPTIONS:
-                    printOptions();
-                    break;
-                case QUIT:
-                    break;
-#ifdef DEBUG_MSG
-                case DEBUG_OPTION:
-                    sendDebug(dev);
-                    break;
-#endif
-                default:
-                    (void) fprintf(stderr, "\33[31m check your input\33[m\n");
-                    break;
-            }
+            switchOption(dev, optionBuf);
         }
     }
 }
