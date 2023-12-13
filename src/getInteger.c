@@ -4,23 +4,23 @@
 static int checkErr(const char *endptr, const char *buf, const long number) {
     if (errno == ERANGE)
     {
-        (void) fprintf(stderr, "the number is too small or too large.");
+        (void) fprintf(stderr, "\33[31m the number is too small or too large\33[m");
         return 0;
     }
     else if (endptr == buf)
     {
-        (void) fprintf(stderr, "not a decimal number");
+        (void) fprintf(stderr, "\33[31m not a decimal number\33[m");
         return 0;
     }
     else if (*endptr && *endptr != '\n')
     {
-        (void) fprintf(stderr, "wrong symbols were entered. "
-               "Fractional number or odd space after the number may have been entered.");
+        (void) fprintf(stderr, "\33[31m wrong symbols were entered. "
+               "Fractional number or odd space after the number may have been entered\33[m");
         return 0;
     }
     else if (errno != 0 && number == 0)
     {
-        (void) fprintf(stderr, "unspecified error occurred.");
+        (void) fprintf(stderr, "\33[31m unspecified error occurred\33[m");
         return 0;
     }
     return 1;
@@ -36,7 +36,7 @@ long getInteger(const char *outputString)
         printf("%s", outputString);
         if (!fgets(buf, 1024, stdin))
         {
-            puts("reading input error.");
+            puts("\33[31m reading input error\33[m");
             exit(1);
         }
         char *endptr = NULL;
