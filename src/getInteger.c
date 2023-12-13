@@ -36,7 +36,7 @@ long getInteger(const char *outputString)
         printf("%s", outputString);
         if (!fgets(buf, 1024, stdin))
         {
-            puts("\33[31m reading input error\33[m");
+            (void) puts("\33[31m reading input error\33[m");
             exit(1);
         }
         char *endptr = NULL;
