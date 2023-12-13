@@ -9,7 +9,7 @@ int main(void)
         hidNullErr();
         return -1;
     }
-    userInterface(dev);
+    runUserInterface(dev);
     finalizeHidApi(dev);
     return 0;
 }

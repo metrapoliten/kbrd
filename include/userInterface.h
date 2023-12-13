@@ -6,4 +6,4 @@
  * Runs user command-line interface which helps to change keyboards mods
  * \param dev
  */
-int userInterface(hid_device *dev);
+int runUserInterface(hid_device *dev);

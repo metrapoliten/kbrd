@@ -55,7 +55,7 @@ static void printOptions(void)
                 "  q     quit\n");
 }
 
-void userInterface(hid_device *dev)
+void runUserInterface(hid_device *dev)
 {
     char optionBuf[4] = {0};
     int res;
