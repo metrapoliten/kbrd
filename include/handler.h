@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lib/hidapi.h"
+#include "hidapi.h"
 
 //#define DEBUG_MSG
 
